@@ -1,56 +1,25 @@
-import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function App() {
-  const [text, setText] = useState('');
-  const [result, setResult] = useState<any>(null);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-
-  const analyzeMessage = async () => {
-    if (!text.trim()) return;
-    setIsAnalyzing(true);
-    setResult(null);
-    
-    try {
-      const res = await fetch('http://localhost:3001/api/detect', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text })
-      });
-      const data = await res.json();
-      setResult(data);
-    } catch (err) {
-      setResult({ error: 'Analysis failed' });
-    } finally {
-      setIsAnalyzing(false);
-    }
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && e.ctrlKey) analyzeMessage();
-  };
-
   return (
     <>
-      {/* Top Navigation Shell */}
       <nav className="fixed top-0 w-full z-50 bg-[#FCF9F8] dark:bg-[#1C1B1B] transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-8 py-5 flex justify-between items-center">
-          <div className="text-xl font-black tracking-tighter text-[#1C1B1B] dark:text-[#FCF9F8] font-headline">
+          <Link to="/" className="text-xl font-black tracking-tighter text-[#1C1B1B] dark:text-[#FCF9F8] font-headline">
             Poseidon Privacy
-          </div>
+          </Link>
           <div className="hidden md:flex items-center gap-10">
             <a className="text-[#1C1B1B]/60 dark:text-[#FCF9F8]/60 font-medium hover:text-[#1E40AF] transition-all duration-300 font-label text-sm uppercase tracking-widest" href="#how-it-works">How it Works</a>
             <a className="text-[#1C1B1B]/60 dark:text-[#FCF9F8]/60 font-medium hover:text-[#1E40AF] transition-all duration-300 font-label text-sm uppercase tracking-widest" href="#privacy">Privacy</a>
             <a className="text-[#1C1B1B]/60 dark:text-[#FCF9F8]/60 font-medium hover:text-[#1E40AF] transition-all duration-300 font-label text-sm uppercase tracking-widest" href="#examples">Examples</a>
           </div>
-          <button className="bg-primary-container text-white px-6 py-2.5 rounded-lg font-bold hover:opacity-90 transition-all scale-95 active:opacity-80">
+          <Link to="/demo" className="bg-primary-container text-white px-6 py-2.5 rounded-lg font-bold hover:opacity-90 transition-all scale-95 active:opacity-80">
             Analyze a Message
-          </button>
+          </Link>
         </div>
       </nav>
       <main className="pt-32">
-        {/* Hero Section */}
-        <section className="max-w-7xl mx-auto px-8 mb-32 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-6">
+        <section className="max-w-7xl mx-auto px-8 mb-32 flex flex-col items-center text-center">
             <span className="inline-flex items-center gap-2 px-3 py-1 bg-primary-fixed-dim text-on-primary-fixed rounded-full text-[10px] font-bold uppercase tracking-[0.2em] mb-6">
               <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>shield</span>
               Verified Protection
@@ -58,68 +27,21 @@ export default function App() {
             <h1 className="font-headline text-6xl md:text-7xl font-extrabold tracking-tighter leading-[0.9] mb-8 text-on-surface">
               Analyze your messages for scams <span className="text-primary-container">instantly.</span>
             </h1>
-            <p className="text-on-surface-variant text-lg max-w-lg mb-10 leading-relaxed">
+            <p className="text-on-surface-variant text-lg max-w-xl mb-10 leading-relaxed">
               Protect yourself from digital fraud. Our architectural-grade analysis identifies phishing attempts in SMS, Emails, and DMs before you click.
             </p>
-            <div className="flex items-center gap-4 text-xs font-bold text-primary-container font-label uppercase tracking-widest">
+            <Link to="/demo" className="inline-flex items-center gap-3 bg-gradient-to-br from-primary to-primary-container text-white px-8 py-4 rounded-lg font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+              Try the Analyzer
+              <span className="material-symbols-outlined text-lg">arrow_forward</span>
+            </Link>
+            <div className="flex items-center gap-4 mt-10 text-xs font-bold text-primary-container font-label uppercase tracking-widest">
               <span>Works on SMS</span>
               <span className="w-1 h-1 bg-outline-variant rounded-full"></span>
               <span>Email</span>
               <span className="w-1 h-1 bg-outline-variant rounded-full"></span>
               <span>Direct Messages</span>
             </div>
-          </div>
-          <div className="lg:col-span-6 relative">
-            <div className="surface-container-high rounded-xl p-8 shadow-2xl shadow-on-background/5 relative z-10">
-              <div className="flex justify-between items-center mb-6">
-                <label className="font-label text-xs font-bold uppercase tracking-widest text-on-surface/40">Paste message below</label>
-                <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-outline-variant/30"></div>
-                  <div className="w-2.5 h-2.5 rounded-full bg-outline-variant/30"></div>
-                  <div className="w-2.5 h-2.5 rounded-full bg-outline-variant/30"></div>
-                </div>
-              </div>
-              <div className="relative">
-                <textarea 
-                  value={text}
-                  onChange={(e) => setText(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  className="w-full h-48 bg-surface-container-lowest border-none rounded-lg p-6 focus:ring-2 focus:ring-primary-container/10 resize-none text-on-surface placeholder:text-on-surface/20 font-body transition-all" placeholder="Example: 'Your bank account has been suspended. Click here to verify: bit.ly/unsecure-link'"></textarea>
-                <div className="absolute bottom-4 right-4">
-                  <button 
-                    onClick={analyzeMessage}
-                    disabled={isAnalyzing || !text.trim()}
-                    className="bg-gradient-to-br from-primary to-primary-container text-white px-8 py-3 rounded-lg font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                    {isAnalyzing ? 'Analyzing...' : 'Analyze Message'}
-                    <span className="material-symbols-outlined text-lg">arrow_forward</span>
-                  </button>
-                </div>
-              </div>
-              {result && (
-                <div className={`mt-6 p-4 rounded-lg ${result.is_scam ? 'bg-red-50 border border-red-200' : 'bg-green-50 border border-green-200'}`}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xl">{result.is_scam ? '🚨' : '✅'}</span>
-                    <span className={`font-bold ${result.is_scam ? 'text-red-700' : 'text-green-700'}`}>
-                      {result.is_scam ? 'SCAM DETECTED' : 'Appears Safe'}
-                    </span>
-                    <span className="text-sm text-gray-500">({result.confidence}% confidence)</span>
-                  </div>
-                  <p className="text-sm text-gray-700 mb-2">{result.reason}</p>
-                  {result.red_flags?.length > 0 && (
-                    <div className="text-sm">
-                      <span className="font-semibold text-red-600">Red flags:</span>
-                      <span className="text-gray-600"> {result.red_flags.join(', ')}</span>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-            {/* Background Architectural Element */}
-            <div className="absolute -top-10 -right-10 w-64 h-64 bg-secondary-container/20 rounded-full blur-3xl -z-0"></div>
-            <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-primary-fixed-dim/20 rounded-full blur-3xl -z-0"></div>
-          </div>
         </section>
-        {/* How it Works: Step Process */}
         <section className="bg-surface-container-low py-32" id="how-it-works">
           <div className="max-w-7xl mx-auto px-8">
             <div className="mb-20">
@@ -131,7 +53,7 @@ export default function App() {
                 <div className="text-primary-container font-headline text-8xl font-black opacity-10 mb-[-40px] group-hover:opacity-20 transition-opacity">01</div>
                 <h3 className="font-headline text-xl font-bold mb-4 relative z-10">Capture</h3>
                 <p className="text-on-surface-variant leading-relaxed text-sm">
-                  Copy any suspicious text from your SMS, Email, or Messaging app and paste it into the analyzer above.
+                  Copy any suspicious text from your SMS, Email, or Messaging app and paste it into the analyzer.
                 </p>
               </div>
               <div className="group">
@@ -151,7 +73,6 @@ export default function App() {
             </div>
           </div>
         </section>
-        {/* Privacy Matters: Bento Grid Layout */}
         <section className="py-32 bg-surface" id="privacy">
           <div className="max-w-7xl mx-auto px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -178,7 +99,7 @@ export default function App() {
                 <span className="material-symbols-outlined text-4xl text-primary-container mb-6" style={{ fontVariationSettings: "'FILL' 1" }}>vpn_lock</span>
                 <h3 className="font-headline text-2xl font-bold mb-4">Encryption by Default</h3>
                 <p className="text-on-surface-variant text-sm leading-relaxed">
-                  Every request is routed through an encrypted tunnel, ensuring that even your network provider cannot see what you're analyzing.
+                  Every request is routed through an encrypted tunnel, ensuring that even your network provider cannot see what you&apos;re analyzing.
                 </p>
               </div>
               <div className="lg:col-span-4 bg-primary-container text-white p-8 rounded-xl flex flex-col justify-center">
@@ -200,7 +121,6 @@ export default function App() {
             </div>
           </div>
         </section>
-        {/* Common Examples Section */}
         <section className="py-32 bg-surface-container-low" id="examples">
           <div className="max-w-7xl mx-auto px-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
@@ -213,7 +133,6 @@ export default function App() {
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* Example 1 */}
               <div className="bg-surface-container-lowest p-8 rounded-xl hover:shadow-xl hover:shadow-on-background/5 transition-all">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="material-symbols-outlined text-error" style={{ fontVariationSettings: "'FILL' 1" }}>sms</span>
@@ -227,7 +146,6 @@ export default function App() {
                   Targets your anxiety about missing mail. Real carriers will never ask for personal info via generic SMS links.
                 </p>
               </div>
-              {/* Example 2 */}
               <div className="bg-surface-container-lowest p-8 rounded-xl hover:shadow-xl hover:shadow-on-background/5 transition-all">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>account_balance</span>
@@ -241,7 +159,6 @@ export default function App() {
                   Uses fear of theft to trick you into entering login credentials on a fraudulent portal.
                 </p>
               </div>
-              {/* Example 3 */}
               <div className="bg-surface-container-lowest p-8 rounded-xl hover:shadow-xl hover:shadow-on-background/5 transition-all">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="material-symbols-outlined text-on-tertiary-container" style={{ fontVariationSettings: "'FILL' 1" }}>card_giftcard</span>
@@ -252,13 +169,12 @@ export default function App() {
                 </div>
                 <h4 className="font-headline font-bold mb-2">The Reward Hook</h4>
                 <p className="text-xs text-on-surface-variant leading-relaxed">
-                  Uses false scarcity and excitement. Legitimate rewards aren't distributed via unsolicited messaging.
+                  Uses false scarcity and excitement. Legitimate rewards aren&apos;t distributed via unsolicited messaging.
                 </p>
               </div>
             </div>
           </div>
         </section>
-        {/* Final Call to Action */}
         <section className="py-32 relative overflow-hidden bg-on-background text-white">
           <div className="absolute inset-0 bg-primary-container mix-blend-multiply opacity-20"></div>
           <div className="max-w-4xl mx-auto px-8 relative z-10 text-center">
@@ -266,25 +182,24 @@ export default function App() {
             <p className="text-white/60 text-xl mb-12 max-w-2xl mx-auto">
               No sign-up required. No credit card needed. Just professional security at your fingertips.
             </p>
-            <button className="bg-white text-on-background px-12 py-5 rounded-lg font-black text-lg hover:scale-105 active:scale-95 transition-all shadow-2xl">
+            <Link to="/demo" className="inline-block bg-white text-on-background px-12 py-5 rounded-lg font-black text-lg hover:scale-105 active:scale-95 transition-all shadow-2xl">
               Analyze Your First Message
-            </button>
+            </Link>
           </div>
         </section>
       </main>
-      {/* Footer */}
       <footer className="w-full py-12 px-8 bg-[#F6F3F2] dark:bg-[#1C1B1B]">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="font-headline font-bold text-[#1C1B1B] dark:text-[#FCF9F8]">
+          <Link to="/" className="font-headline font-bold text-[#1C1B1B] dark:text-[#FCF9F8]">
             Poseidon Privacy
-          </div>
+          </Link>
           <div className="flex gap-8">
             <a className="font-label text-xs uppercase tracking-widest text-[#1C1B1B]/60 hover:text-[#1E40AF] cursor-pointer transition-opacity" href="#">Terms of Service</a>
             <a className="font-label text-xs uppercase tracking-widest text-[#1C1B1B]/60 hover:text-[#1E40AF] cursor-pointer transition-opacity" href="#">Security Whitepaper</a>
             <a className="font-label text-xs uppercase tracking-widest text-[#1C1B1B]/60 hover:text-[#1E40AF] cursor-pointer transition-opacity" href="#">Contact Support</a>
           </div>
           <div className="font-label text-xs uppercase tracking-widest text-[#1C1B1B]/50">
-            © 2025 Poseidon Privacy. Architectural Integrity in Security.
+            &copy; 2025 Poseidon Privacy. Architectural Integrity in Security.
           </div>
         </div>
       </footer>

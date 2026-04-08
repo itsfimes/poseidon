@@ -95,3 +95,4 @@ source .venv/bin/activate
 - Root `.gitignore` includes both **Node/JS** and **Python** artifacts.
 - Keep dependency installs local to each package (`frontend/`, `backend/js/`, and future Python projects).
 - The previous single-file static UI is preserved at `docs/legacy-static-demo.html` for reference.
+

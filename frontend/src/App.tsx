@@ -35,7 +35,7 @@ export default function App() {
       <nav className="fixed top-0 w-full z-50 bg-[#FCF9F8] dark:bg-[#1C1B1B] transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-8 py-5 flex justify-between items-center">
           <div className="text-xl font-black tracking-tighter text-[#1C1B1B] dark:text-[#FCF9F8] font-headline">
-            GuardianAI
+            Poseidon Privacy
           </div>
           <div className="hidden md:flex items-center gap-10">
             <a className="text-[#1C1B1B]/60 dark:text-[#FCF9F8]/60 font-medium hover:text-[#1E40AF] transition-all duration-300 font-label text-sm uppercase tracking-widest" href="#how-it-works">How it Works</a>
@@ -276,7 +276,7 @@ export default function App() {
       <footer className="w-full py-12 px-8 bg-[#F6F3F2] dark:bg-[#1C1B1B]">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="font-headline font-bold text-[#1C1B1B] dark:text-[#FCF9F8]">
-            GuardianAI
+            Poseidon Privacy
           </div>
           <div className="flex gap-8">
             <a className="font-label text-xs uppercase tracking-widest text-[#1C1B1B]/60 hover:text-[#1E40AF] cursor-pointer transition-opacity" href="#">Terms of Service</a>
@@ -284,7 +284,7 @@ export default function App() {
             <a className="font-label text-xs uppercase tracking-widest text-[#1C1B1B]/60 hover:text-[#1E40AF] cursor-pointer transition-opacity" href="#">Contact Support</a>
           </div>
           <div className="font-label text-xs uppercase tracking-widest text-[#1C1B1B]/50">
-            © 2024 GuardianAI. Architectural Integrity in Security.
+            © 2025 Poseidon Privacy. Architectural Integrity in Security.
           </div>
         </div>
       </footer>

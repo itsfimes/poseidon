@@ -1,6 +1,6 @@
-# Poseidon
+# Poseidon Privacy
 
-Poseidon is organized as a multi-language project with:
+Poseidon Privacy is organized as a multi-language project with:
 
 - **Frontend**: React + Vite (TypeScript)
 - **Backend (JS)**: Express API server

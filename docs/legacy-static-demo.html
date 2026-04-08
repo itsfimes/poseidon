@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Scam Detector</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #fff;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2.5rem;
+    }
+    h1 span { color: #e94560; }
+    .input-section {
+      background: #1f1f3a;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      background: #2a2a4a;
+      border: 2px solid #3a3a5a;
+      border-radius: 12px;
+      padding: 1rem;
+      color: #fff;
+      font-size: 1rem;
+      resize: vertical;
+      transition: border-color 0.3s;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: #e94560;
+    }
+    textarea::placeholder { color: #888; }
+    button {
+      width: 100%;
+      margin-top: 1rem;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, #e94560, #ff6b6b);
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(233, 69, 96, 0.4);
+    }
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .result {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      border-radius: 12px;
+      display: none;
+    }
+    .result.show { display: block; animation: fadeIn 0.5s; }
+    .result.scam {
+      background: rgba(233, 69, 96, 0.2);
+      border: 2px solid #e94560;
+    }
+    .result.safe {
+      background: rgba(76, 175, 80, 0.2);
+      border: 2px solid #4caf50;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .result-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .result-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    .scam .result-icon { background: #e94560; }
+    .safe .result-icon { background: #4caf50; }
+    .result h2 { color: #fff; }
+    .scam h2 { color: #e94560; }
+    .safe h2 { color: #4caf50; }
+    .confidence {
+      color: #aaa;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+    .reason {
+      color: #ddd;
+      margin: 1rem 0;
+      line-height: 1.6;
+    }
+    .red-flags {
+      background: rgba(0,0,0,0.3);
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    .red-flags h4 { color: #e94560; margin-bottom: 0.5rem; }
+    .red-flags ul { list-style: none; }
+    .red-flags li {
+      color: #ff8a8a;
+      padding: 0.3rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .red-flags li::before { content: "⚠️"; }
+    .examples {
+      margin-top: 2rem;
+    }
+    .examples h3 { color: #aaa; margin-bottom: 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+    .example-btns { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .example-btn {
+      padding: 0.5rem 1rem;
+      background: #2a2a4a;
+      border: 1px solid #3a3a5a;
+      border-radius: 20px;
+      color: #aaa;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .example-btn:hover {
+      background: #3a3a5a;
+      color: #fff;
+    }
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+      color: #aaa;
+    }
+    .loading.show { display: block; }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #3a3a5a;
+      border-top-color: #e94560;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🤖 AI Scam <span>Detector</span></h1>
+    
+    <div class="input-section">
+      <textarea id="textInput" placeholder="Paste suspicious text, email, or message here..."></textarea>
+      <button id="analyzeBtn">Analyze Text</button>
+      
+      <div class="examples">
+        <h3>Try these examples:</h3>
+        <div class="example-btns">
+          <button class="example-btn" data-text="URGENT: Your account has been compromised! Click here immediately to verify your identity or lose access forever!">Fake Bank Alert</button>
+          <button class="example-btn" data-text="Congratulations! You've won a $1,000 Amazon gift card! Claim now by clicking this link!">Prize Scam</button>
+          <button class="example-btn" data-text="Hi, just checking in on the project status. Let me know if you need any help with the deliverables.">Normal Message</button>
+          <button class="example-btn" data-text="Dear Investor, This exclusive opportunity guarantees 50% returns in 2 weeks! Act now before it's gone!">Investment Scam</button>
+          <button class="example-btn" data-text="Your package is waiting! Please confirm delivery address by clicking the link below.">Package Scam</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      Analyzing with AI...
+    </div>
+
+    <div class="result" id="result">
+      <div class="result-header">
+        <div class="result-icon" id="resultIcon"></div>
+        <div>
+          <h2 id="resultTitle"></h2>
+          <p class="confidence" id="confidence"></p>
+        </div>
+      </div>
+      <p class="reason" id="reason"></p>
+      <div class="red-flags" id="redFlagsSection">
+        <h4>🚩 Red Flags Detected:</h4>
+        <ul id="redFlagsList"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const textInput = document.getElementById('textInput');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const result = document.getElementById('result');
+    const loading = document.getElementById('loading');
+
+    document.querySelectorAll('.example-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        textInput.value = btn.dataset.text;
+        result.classList.remove('show');
+      });
+    });
+
+    analyzeBtn.addEventListener('click', async () => {
+      const text = textInput.value.trim();
+      if (!text) return;
+
+      analyzeBtn.disabled = true;
+      loading.classList.add('show');
+      result.classList.remove('show');
+
+      try {
+        const res = await fetch('http://localhost:3001/api/detect', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text })
+        });
+        
+        const data = await res.json();
+        
+        const isScam = data.is_scam;
+        result.className = 'result show ' + (isScam ? 'scam' : 'safe');
+        
+        document.getElementById('resultIcon').textContent = isScam ? '🚨' : '✅';
+        document.getElementById('resultTitle').textContent = isScam ? '⚠️ SCAM DETECTED' : '✅ Appears Safe';
+        document.getElementById('confidence').textContent = `Confidence: ${data.confidence || 0}%`;
+        document.getElementById('reason').textContent = data.reason || 'Analyzed successfully';
+        
+        const flagsList = document.getElementById('redFlagsList');
+        const flags = data.red_flags || [];
+        if (flags.length > 0) {
+          document.getElementById('redFlagsSection').style.display = 'block';
+          flagsList.innerHTML = flags.map(f => `<li>${f}</li>`).join('');
+        } else {
+          document.getElementById('redFlagsSection').style.display = 'none';
+        }
+      } catch (err) {
+        alert('Error: ' + err.message);
+      } finally {
+        analyzeBtn.disabled = false;
+        loading.classList.remove('show');
+      }
+    });
+  </script>
+</body>
+</html>

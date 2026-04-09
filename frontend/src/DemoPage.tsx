@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useMemo } from 'react';
+import { type KeyboardEvent, useState, useRef, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function DemoPage() {
@@ -79,7 +79,7 @@ export default function DemoPage() {
     startProgress();
 
     try {
-      const res = await fetch('http://localhost:3001/api/detect', {
+      const res = await fetch('/api/detect', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text })
@@ -98,7 +98,7 @@ export default function DemoPage() {
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && e.ctrlKey) analyzeMessage();
   };
 

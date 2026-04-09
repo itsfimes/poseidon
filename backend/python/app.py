@@ -74,7 +74,7 @@ SCAM_RESULT_SCHEMA: Final[dict[str, object]] = {
 
 ALLOWED_ORIGINS: Final[tuple[str, ...]] = tuple(
     origin.strip()
-    for origin in os.getenv("ALLOW_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000").split(",")
+    for origin in os.getenv("ALLOW_ORIGINS", "http://localhost:3001,http://127.0.0.1:3001").split(",")
     if origin.strip()
 )
 

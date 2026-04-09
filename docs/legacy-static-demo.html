@@ -233,7 +233,7 @@
       result.classList.remove('show');
 
       try {
-        const res = await fetch('http://localhost:3001/api/detect', {
+        const res = await fetch('/api/detect', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ text })

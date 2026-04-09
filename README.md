@@ -70,7 +70,8 @@ cd backend/js
 npm start
 ```
 
-Backend runs on `http://localhost:3001` and serves frontend build files from `frontend/dist` when available.
+Frontend dev server runs on `http://localhost:3001`.
+Backend JS API runs on `http://localhost:3002` by default (override with `PORT`) and serves frontend build files from `frontend/dist` when available.
 
 ## Environment Variables
 
@@ -95,4 +96,3 @@ source .venv/bin/activate
 - Root `.gitignore` includes both **Node/JS** and **Python** artifacts.
 - Keep dependency installs local to each package (`frontend/`, `backend/js/`, and future Python projects).
 - The previous single-file static UI is preserved at `docs/legacy-static-demo.html` for reference.
-

@@ -65,7 +65,7 @@ If `frontend/dist` exists, the backend serves static files with SPA fallback.
 Allowed origins are controlled by `ALLOW_ORIGINS` (comma-separated):
 
 ```bash
-ALLOW_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+ALLOW_ORIGINS=http://localhost:3001,http://127.0.0.1:3001
 ```
 
 ## Performance and GPU acceleration

@@ -4,27 +4,23 @@ export default function App() {
   return (
     <>
       <nav className="fixed top-0 w-full z-50 bg-[#FCF9F8] dark:bg-[#1C1B1B] transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-8 py-5 flex justify-between items-center">
-          <Link to="/" className="text-xl font-black tracking-tighter text-[#1C1B1B] dark:text-[#FCF9F8] font-headline">
-            Poseidon Privacy
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-3 sm:py-5 flex justify-between items-center">
+          <Link to="/" className="text-lg sm:text-xl font-black tracking-tighter text-[#1C1B1B] dark:text-[#FCF9F8] font-headline">
+            Poseidon Guardian
           </Link>
           <div className="hidden md:flex items-center gap-10">
             <a className="text-[#1C1B1B]/60 dark:text-[#FCF9F8]/60 font-medium hover:text-[#1E40AF] transition-all duration-300 font-label text-sm uppercase tracking-widest" href="#how-it-works">How it Works</a>
             <a className="text-[#1C1B1B]/60 dark:text-[#FCF9F8]/60 font-medium hover:text-[#1E40AF] transition-all duration-300 font-label text-sm uppercase tracking-widest" href="#privacy">Privacy</a>
             <a className="text-[#1C1B1B]/60 dark:text-[#FCF9F8]/60 font-medium hover:text-[#1E40AF] transition-all duration-300 font-label text-sm uppercase tracking-widest" href="#examples">Examples</a>
           </div>
-          <Link to="/demo" className="bg-primary-container text-white px-6 py-2.5 rounded-lg font-bold hover:opacity-90 transition-all scale-95 active:opacity-80">
-            Analyze a Message
+          <Link to="/demo" className="bg-primary-container text-white px-4 py-2 sm:px-6 sm:py-2.5 rounded-lg font-bold hover:opacity-90 transition-all active:opacity-80 text-sm sm:text-base">
+            Analyze
           </Link>
         </div>
       </nav>
-      <main className="pt-32">
-        <section className="max-w-7xl mx-auto px-8 mb-32 flex flex-col items-center text-center">
-            <span className="inline-flex items-center gap-2 px-3 py-1 bg-primary-fixed-dim text-on-primary-fixed rounded-full text-[10px] font-bold uppercase tracking-[0.2em] mb-6">
-              <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>shield</span>
-              Verified Protection
-            </span>
-            <h1 className="font-headline text-6xl md:text-7xl font-extrabold tracking-tighter leading-[0.9] mb-8 text-on-surface">
+      <main className="pt-36">
+        <section className="max-w-7xl mx-auto px-8 mb-24 flex flex-col items-center text-center">
+            <h1 className="font-headline text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tighter leading-[0.9] mb-8 text-on-surface">
               Analyze your messages for scams <span className="text-primary-container">instantly.</span>
             </h1>
             <p className="text-on-surface-variant text-lg max-w-xl mb-10 leading-relaxed">
@@ -34,12 +30,12 @@ export default function App() {
               Try the Analyzer
               <span className="material-symbols-outlined text-lg">arrow_forward</span>
             </Link>
-            <div className="flex items-center gap-4 mt-10 text-xs font-bold text-primary-container font-label uppercase tracking-widest">
-              <span>Works on SMS</span>
+            <div className="flex items-center gap-4 mt-6 text-xs font-bold text-primary-container font-label uppercase tracking-widest">
+              <span>Simple</span>
               <span className="w-1 h-1 bg-outline-variant rounded-full"></span>
-              <span>Email</span>
+              <span>Fast</span>
               <span className="w-1 h-1 bg-outline-variant rounded-full"></span>
-              <span>Direct Messages</span>
+              <span>Scalable</span>
             </div>
         </section>
         <section className="bg-surface-container-low py-32" id="how-it-works">
@@ -80,21 +76,10 @@ export default function App() {
                 <div>
                   <h2 className="font-headline text-5xl font-extrabold tracking-tighter mb-6 leading-tight">Privacy-first:<br />Your data is never stored.</h2>
                   <p className="text-white/60 max-w-md text-lg leading-relaxed">
-                    We utilize stateless processing. Once the analysis is complete, your message is purged from our temporary memory instantly. No logs, no history, no tracking.
+                    We utilize stateless processing. Once the analysis is complete, your message is purged from our temporary memory instantly. No tracable informations.
                   </p>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="flex -space-x-2">
-                    <div className="w-10 h-10 rounded-full border-2 border-on-background overflow-hidden">
-                      <img className="w-full h-full object-cover" data-alt="portrait of a professional security architect in a modern office" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7UqJURFvw9GRZDRDrRO-5I-lm59ZUUn2VlR8PpxgxcXCxmzMvZkeLZ21YPZ8CMvYl7cuqC7GyKu27pW8x6W6ayc6wzrtH-Sxk0f0f0E6tN2ZMh9e-PzzuRMM_PEC0KglvyMtRw_KTqtKDM7jEgId-qHtzh0EtRdT6zgRb6qr_T890fp1euoIlTKgtkLl-O_q8igPShkcap7xcwQup7m21IIOdArXgLrFR2t4gUbAXJ5CfmMIOIF8xXMY02UsZzG4QSOmip_4K9uFb" />
-                    </div>
-                    <div className="w-10 h-10 rounded-full border-2 border-on-background overflow-hidden">
-                      <img className="w-full h-full object-cover" data-alt="portrait of a confident cybersecurity expert smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSSfLPHsE4RGy89KHuThtHCWqjrH2-Jsvr6WYTWeGaolBK6FZZed4vGdwWrzoc7rQwgfst8_N9c-_9V79NqKqfUYTwPTKeqeN2hGtTS9liLiUSpFN4esq1gFQU_64vVJkIHq1D20Ldq_hNYSK_467moxnpeQgzVp_EoVJZF_ZxJNOWAL97qp47sUCCigD-E6fxyvw-FKawO_3NGOShjsAU1f-6XQ6IAcNJdI_eLEiuZev_Ce7VtvnhfVCIiEQsuadpRBXbu_w_1nI3" />
-                    </div>
-                  </div>
-                  <span className="text-xs font-bold uppercase tracking-widest text-white/40">Trusted by Security Professionals</span>
-                </div>
-              </div>
+                 </div>
+               </div>
               <div className="lg:col-span-4 bg-surface-container-high p-8 rounded-xl flex flex-col justify-center">
                 <span className="material-symbols-outlined text-4xl text-primary-container mb-6" style={{ fontVariationSettings: "'FILL' 1" }}>vpn_lock</span>
                 <h3 className="font-headline text-2xl font-bold mb-4">Encryption by Default</h3>
@@ -191,7 +176,7 @@ export default function App() {
       <footer className="w-full py-12 px-8 bg-[#F6F3F2] dark:bg-[#1C1B1B]">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <Link to="/" className="font-headline font-bold text-[#1C1B1B] dark:text-[#FCF9F8]">
-            Poseidon Privacy
+            Poseidon Guardian
           </Link>
           <div className="flex gap-8">
             <a className="font-label text-xs uppercase tracking-widest text-[#1C1B1B]/60 hover:text-[#1E40AF] cursor-pointer transition-opacity" href="#">Terms of Service</a>
@@ -199,7 +184,7 @@ export default function App() {
             <a className="font-label text-xs uppercase tracking-widest text-[#1C1B1B]/60 hover:text-[#1E40AF] cursor-pointer transition-opacity" href="#">Contact Support</a>
           </div>
           <div className="font-label text-xs uppercase tracking-widest text-[#1C1B1B]/50">
-            &copy; 2025 Poseidon Privacy. Architectural Integrity in Security.
+            &copy; 2025 Poseidon Guardian. Architectural Integrity in Security.
           </div>
         </div>
       </footer>

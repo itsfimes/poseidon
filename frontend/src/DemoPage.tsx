@@ -105,9 +105,9 @@ export default function DemoPage() {
   return (
     <>
       <nav className="fixed top-0 w-full z-50 bg-[#FCF9F8] dark:bg-[#1C1B1B] transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-8 py-5 flex justify-between items-center">
-          <button onClick={() => navigate('/')} className="text-xl font-black tracking-tighter text-[#1C1B1B] dark:text-[#FCF9F8] font-headline">
-            Poseidon Privacy
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-3 sm:py-5 flex justify-between items-center">
+          <button onClick={() => navigate('/')} className="text-lg sm:text-xl font-black tracking-tighter text-[#1C1B1B] dark:text-[#FCF9F8] font-headline">
+            Poseidon Guardian
           </button>
         </div>
       </nav>
@@ -130,35 +130,28 @@ export default function DemoPage() {
           </p>
         </div>
 
-        <div className="surface-container-high rounded-xl p-8 shadow-2xl shadow-on-background/5">
-          <div className="flex justify-between items-center mb-6">
-            <label className="font-label text-xs font-bold uppercase tracking-widest text-on-surface/40">Paste message below</label>
-            <div className="flex gap-1.5">
-              <div className="w-2.5 h-2.5 rounded-full bg-outline-variant/30"></div>
-              <div className="w-2.5 h-2.5 rounded-full bg-outline-variant/30"></div>
-              <div className="w-2.5 h-2.5 rounded-full bg-outline-variant/30"></div>
-            </div>
-            <span className={`text-xs tabular-nums ${text.length >= 950 ? 'text-error' : 'text-on-surface/30'}`}>{text.length}/1000</span>
+        <div className="surface-container-high rounded-xl p-4 sm:p-8 shadow-2xl shadow-on-background/5">
+          <div className="flex justify-between items-center mb-4 sm:mb-6">
+            <label className="font-label text-[10px] sm:text-xs font-bold uppercase tracking-widest text-on-surface/40">Paste message below</label>
+            <span className={`text-[10px] sm:text-xs tabular-nums ${text.length >= 950 ? 'text-error' : 'text-on-surface/30'}`}>{text.length}/1000</span>
           </div>
           <div className="relative">
             <textarea
               value={text}
               onChange={(e) => setText(e.target.value.slice(0, 1000))}
               onKeyDown={handleKeyDown}
-              className="w-full h-48 bg-surface-container-lowest border-none rounded-lg p-6 focus:ring-2 focus:ring-primary-container/10 resize-none text-on-surface placeholder:text-on-surface/20 font-body transition-all"
+              className="w-full h-40 sm:h-48 bg-surface-container-lowest border-none rounded-lg p-4 sm:p-6 focus:ring-2 focus:ring-primary-container/10 resize-none text-on-surface text-sm sm:text-base placeholder:text-on-surface/20 font-body transition-all"
               placeholder="Example: 'Your bank account has been suspended. Click here to verify: bit.ly/unsecure-link'"
             />
-            <div className="absolute bottom-4 right-4">
-              <button
-                onClick={analyzeMessage}
-                disabled={isAnalyzing || cooldown || !text.trim()}
-                className="bg-gradient-to-br from-primary to-primary-container text-white px-8 py-3 rounded-lg font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isAnalyzing ? 'Analyzing...' : 'Analyze Message'}
-                <span className="material-symbols-outlined text-lg">arrow_forward</span>
-              </button>
-            </div>
           </div>
+          <button
+            onClick={analyzeMessage}
+            disabled={isAnalyzing || cooldown || !text.trim()}
+            className="mt-4 w-full sm:w-auto bg-gradient-to-br from-primary to-primary-container text-white px-6 sm:px-8 py-3 rounded-lg font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isAnalyzing ? 'Analyzing...' : 'Analyze Message'}
+            <span className="material-symbols-outlined text-lg">arrow_forward</span>
+          </button>
 
           {isAnalyzing && (
             <div className="mt-6">
@@ -212,11 +205,11 @@ export default function DemoPage() {
         </div>
 
         <div className="mt-8 flex items-center gap-4 text-xs font-bold text-primary-container font-label uppercase tracking-widest">
-          <span>Works on SMS</span>
+          <span>Simple</span>
           <span className="w-1 h-1 bg-outline-variant rounded-full"></span>
-          <span>Email</span>
+          <span>Fast</span>
           <span className="w-1 h-1 bg-outline-variant rounded-full"></span>
-          <span>Direct Messages</span>
+          <span>Scalable</span>
         </div>
       </div>
     </main>

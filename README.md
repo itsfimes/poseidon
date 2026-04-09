@@ -1,6 +1,6 @@
-# Poseidon Privacy
+# Poseidon Guardian
 
-Poseidon Privacy is organized as a multi-language project with:
+Poseidon Guardian is organized as a multi-language project with:
 
 - **Frontend**: React + Vite (TypeScript)
 - **Backend (JS)**: Express API server

@@ -5,6 +5,7 @@ export default function DemoPage() {
   const [text, setText] = useState('');
   const [result, setResult] = useState<any>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [cooldown, setCooldown] = useState(false);
   const [progress, setProgress] = useState(0);
   const animRef = useRef(0);
   const navigate = useNavigate();
@@ -92,6 +93,8 @@ export default function DemoPage() {
     } finally {
       cancelAnimationFrame(animRef.current);
       setIsAnalyzing(false);
+      setCooldown(true);
+      setTimeout(() => setCooldown(false), 1000);
     }
   };
 
@@ -148,7 +151,7 @@ export default function DemoPage() {
             <div className="absolute bottom-4 right-4">
               <button
                 onClick={analyzeMessage}
-                disabled={isAnalyzing || !text.trim()}
+                disabled={isAnalyzing || cooldown || !text.trim()}
                 className="bg-gradient-to-br from-primary to-primary-container text-white px-8 py-3 rounded-lg font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isAnalyzing ? 'Analyzing...' : 'Analyze Message'}

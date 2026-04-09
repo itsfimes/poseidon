@@ -1,13 +1,50 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function DemoPage() {
   const [text, setText] = useState('');
   const [result, setResult] = useState<any>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [cooldown, setCooldown] = useState(false);
   const [progress, setProgress] = useState(0);
   const animRef = useRef(0);
   const navigate = useNavigate();
+
+  const examples = useMemo(() => {
+    const bank = [
+      'URGENT: Your account has been compromised! Verify your identity immediately or lose access forever: bit.ly/secure-bank-verify',
+      'We detected an unauthorized login from a new device. Confirm it was you: secure-mybank-portal.com/auth',
+      'Alert: A wire transfer of $4,200 was initiated from your account. If this was not you, cancel here: cancel-transfer-now.com',
+    ];
+    const pkg = [
+      'USPS: Your package is on hold due to missing address. Update now to schedule delivery: usps-delivery-support.com',
+      'FedEx: We attempted delivery but no one was home. Reschedule at fedex-missed-delivery.com',
+      'DHL: Your shipment requires customs payment of $2.50 before release. Pay now: dhl-customs-fees.com',
+    ];
+    const invest = [
+      'Dear Investor, this exclusive opportunity guarantees 50% returns in 2 weeks! Act now before it\'s gone: crypto-profit-now.io',
+      'You\'ve been selected to join our VIP trading group. Our members average $5,000/day. Sign up free: elite-traders-club.com',
+      'Turn $100 into $10,000 with AI-powered trading. Our algorithm never loses. Start now: quantum-trades-ai.com',
+    ];
+    const prize = [
+      'Congratulations! You\'ve won a $1,000 Amazon Gift Card. Claim your reward in the next 10 minutes: win-big-now.biz',
+      'You are our lucky winner of the month! Click to claim your iPhone 15 Pro before it expires: apple-rewards-claim.com',
+      'Your entry was selected! You\'ve won a luxury vacation for two. Confirm your details: free-trip-2025.com',
+    ];
+    const safe = [
+      'Hi, just checking in on the project status. Let me know if you need any help with the deliverables.',
+      'Hey, are we still on for dinner at 7? I made a reservation at that Italian place you liked.',
+      'Your order #4821 has shipped! Expected delivery: Thursday. Track your package in the app.',
+    ];
+    const pick = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
+    return [
+      { label: 'Bank Alert', text: pick(bank) },
+      { label: 'Package Scam', text: pick(pkg) },
+      { label: 'Investment', text: pick(invest) },
+      { label: 'Prize', text: pick(prize) },
+      { label: 'Safe Message', text: pick(safe) },
+    ];
+  }, [isAnalyzing]);
 
   const startProgress = useCallback(() => {
     cancelAnimationFrame(animRef.current);
@@ -56,6 +93,8 @@ export default function DemoPage() {
     } finally {
       cancelAnimationFrame(animRef.current);
       setIsAnalyzing(false);
+      setCooldown(true);
+      setTimeout(() => setCooldown(false), 1000);
     }
   };
 
@@ -99,11 +138,12 @@ export default function DemoPage() {
               <div className="w-2.5 h-2.5 rounded-full bg-outline-variant/30"></div>
               <div className="w-2.5 h-2.5 rounded-full bg-outline-variant/30"></div>
             </div>
+            <span className={`text-xs tabular-nums ${text.length >= 950 ? 'text-error' : 'text-on-surface/30'}`}>{text.length}/1000</span>
           </div>
           <div className="relative">
             <textarea
               value={text}
-              onChange={(e) => setText(e.target.value)}
+              onChange={(e) => setText(e.target.value.slice(0, 1000))}
               onKeyDown={handleKeyDown}
               className="w-full h-48 bg-surface-container-lowest border-none rounded-lg p-6 focus:ring-2 focus:ring-primary-container/10 resize-none text-on-surface placeholder:text-on-surface/20 font-body transition-all"
               placeholder="Example: 'Your bank account has been suspended. Click here to verify: bit.ly/unsecure-link'"
@@ -111,7 +151,7 @@ export default function DemoPage() {
             <div className="absolute bottom-4 right-4">
               <button
                 onClick={analyzeMessage}
-                disabled={isAnalyzing || !text.trim()}
+                disabled={isAnalyzing || cooldown || !text.trim()}
                 className="bg-gradient-to-br from-primary to-primary-container text-white px-8 py-3 rounded-lg font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isAnalyzing ? 'Analyzing...' : 'Analyze Message'}
@@ -153,6 +193,22 @@ export default function DemoPage() {
               )}
             </div>
           )}
+        </div>
+
+        <div className="mt-6 flex items-center gap-3">
+          <span className="font-label text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface/30">Try:</span>
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+            {examples.map((ex) => (
+              <button
+                key={ex.label}
+                onClick={() => setText(ex.text)}
+                disabled={isAnalyzing}
+                className="shrink-0 px-3 py-1 text-on-surface/40 text-xs font-medium rounded-full border border-outline-variant/20 hover:text-primary-container hover:border-primary-container/30 transition-all disabled:opacity-50"
+              >
+                {ex.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="mt-8 flex items-center gap-4 text-xs font-bold text-primary-container font-label uppercase tracking-widest">

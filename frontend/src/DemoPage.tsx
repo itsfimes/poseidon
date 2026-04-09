@@ -135,11 +135,12 @@ export default function DemoPage() {
               <div className="w-2.5 h-2.5 rounded-full bg-outline-variant/30"></div>
               <div className="w-2.5 h-2.5 rounded-full bg-outline-variant/30"></div>
             </div>
+            <span className={`text-xs tabular-nums ${text.length >= 950 ? 'text-error' : 'text-on-surface/30'}`}>{text.length}/1000</span>
           </div>
           <div className="relative">
             <textarea
               value={text}
-              onChange={(e) => setText(e.target.value)}
+              onChange={(e) => setText(e.target.value.slice(0, 1000))}
               onKeyDown={handleKeyDown}
               className="w-full h-48 bg-surface-container-lowest border-none rounded-lg p-6 focus:ring-2 focus:ring-primary-container/10 resize-none text-on-surface placeholder:text-on-surface/20 font-body transition-all"
               placeholder="Example: 'Your bank account has been suspended. Click here to verify: bit.ly/unsecure-link'"

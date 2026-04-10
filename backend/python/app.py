@@ -375,8 +375,8 @@ def analyze_with_ollama(text: str) -> dict[str, object]:
         "{is_scam:boolean, confidence:0-100 integer, reason:string, red_flags:string[]}.\n"
         "Rules:\n"
         "- If message contains phishing patterns, urgency pressure, credential requests, suspicious links, or social engineering, set is_scam=true.\n"
-        "- confidence must be an integer between 0 and 100.\n"
-        "- red_flags must be concise strings.\n"
+        "- confidence means how certain you are of your verdict (is_scam). A clearly safe message like 'hi how are you' should get high confidence (85-95) because it is obviously not a scam. A clearly malicious message should also get high confidence. Only use low confidence (below 50) when the message is genuinely ambiguous.\n"
+        "- red_flags must be concise strings. Use an empty array for safe messages.\n"
         "- reason must match verdict and red_flags.\n\n"
         f'Text: "{text}"'
     )

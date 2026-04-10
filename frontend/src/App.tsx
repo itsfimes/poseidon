@@ -76,7 +76,7 @@ export default function App() {
                 <div>
                   <h2 className="font-headline text-5xl font-extrabold tracking-tighter mb-6 leading-tight">Privacy-first:<br />Your data is never stored.</h2>
                   <p className="text-white/60 max-w-md text-lg leading-relaxed">
-                    We utilize stateless processing. Once the analysis is complete, your message is purged from our temporary memory instantly. No tracable informations.
+                    We utilize stateless processing. Once the analysis is complete, your message is purged from our temporary memory instantly. No tracable information.
                   </p>
                  </div>
                </div>
